@@ -7,7 +7,7 @@
 Kandji-App-Audit.py
 ```
 
-This Python script queries the [Kandji API](https://api-docs.kandji.io/#478764c4-638c-416c-b44c-3685a2f7b441) for the **status of a specific Library Item** (such as a custom script).  
+This Python script queries the [Kandji API](https://api-docs.kandji.io/#478764c4-638c-416c-b44c-3685a2f7b441) for the **status of a specific Library Item** (custom script).  
 It outputs results to the terminal and can optionally export them to a CSV file.
 
 ---
@@ -24,8 +24,14 @@ It outputs results to the terminal and can optionally export them to a CSV file.
 
 3. **Process Results**  
    - Extracts the `computer_name` and the latest `"Script results:"` line from each device’s logs.  
-   - Skips devices with missing or irrelevant results.  
    - Prints the results to the terminal.
+   - Errors are also captured 
+
+```
+Error: Script ran but produced no output
+Error: No 'Script results:' in log
+Error: No log data found
+```
 
 4. **Optional CSV Export**  
    - Prompts whether to save results in `Downloads`, `Desktop`, or `Documents`.  

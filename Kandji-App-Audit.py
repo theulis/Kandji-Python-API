@@ -77,28 +77,37 @@ results_rows = []  # list of tuples: (computer_name, result_line)
 
 
 while url:  # keep looping until 'next' is None
-  response = requests.request("GET", url, headers=headers, data=payload)
-  json_response = response.json()
+    response = requests.request("GET", url, headers=headers, data=payload)
+    json_response = response.json()
 
-  for value in range(len(json_response["results"])):
-    log_lines = json_response["results"][value]["log"]
+    for value in range(len(json_response["results"])):
+        log_lines = json_response["results"][value]["log"]
+        computer_name = json_response["results"][value]["computer"]["name"]
 
-    ## Avoid any errors in case there is a Null result (Script hasn't run yet)
-    if log_lines:
-      # Only process logs that contain "Script results:" (actual package data)
-      if "Script results:" in log_lines:
-        script_results = log_lines.split("Script results:", 1)[1].strip()
-        # Take only the last meaningful line from script results
-        lines = [l.strip() for l in script_results.split('\n') if l.strip() and not l.startswith("Exit code:")]
-        if lines:
-          last_line = lines[-1]
-          computer_name = json_response["results"][value]["computer"]["name"]
-          print(f'{computer_name},{last_line}')
-          results_rows.append((computer_name, last_line))
-      # If no "Script results:" found or contains errors, skip this computer entirely
-  
-  # ✅ assign url to the next page, if any
-  url = json_response.get("next")
+        if log_lines:
+            if "Script results:" in log_lines:
+                script_results = log_lines.split("Script results:", 1)[1].strip()
+                lines = [l.strip() for l in script_results.split('\n') if l.strip() and not l.startswith("Exit code:")]
+                if lines:
+                    last_line = lines[-1]
+                    print(f'{computer_name},{last_line}')
+                    results_rows.append((computer_name, last_line))
+                else:
+                    error_msg = "Error: Script ran but produced no output"
+                    print(f'{computer_name},{error_msg}')
+                    results_rows.append((computer_name, error_msg))
+            else:
+                error_msg = "Error: No 'Script results:' in log"
+                print(f'{computer_name},{error_msg}')
+                results_rows.append((computer_name, error_msg))
+        else:
+            error_msg = "Error: No log data found"
+            print(f'{computer_name},{error_msg}')
+            results_rows.append((computer_name, error_msg))
+
+    # Move to next page if any
+    url = json_response.get("next")
+
 
 # Write CSV if requested and directory is valid
 if should_write_csv and results_rows:
