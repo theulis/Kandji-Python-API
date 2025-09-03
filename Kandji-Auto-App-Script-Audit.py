@@ -2,6 +2,7 @@ import requests
 import os
 import csv
 import time
+import re 
 
 # ANSI colors for nicer terminal output
 RED = "\033[31m"
@@ -22,19 +23,10 @@ authorisation_value = str('Bearer ') + kandji_api_token
 ### You can get from the full URL in Kandji : https://domain.kandji.io/library/custom-scripts/b5d21f9e-9d41-4463-b2b5-c292b3c2ccad/status
 
 
-# The Custom Library Item must have an echo command, which will be displayed as an output
+# Kandji has a more complicated GitHub Script - For more info [Device Library Items](
+# https://github.com/kandji-inc/support/blob/main/api-tools/device-library-items/README.md)
 
-#Uptime Reminder
-# boottime=`sysctl -n kern.boottime | awk '{print $4}' | sed 's/,//g'`
-# unixtime=`date +%s`
-# timeAgo=$(($unixtime - $boottime))
-# uptime=`awk -v time=$timeAgo 'BEGIN {days = int(time / 60 / 60 / 24); printf("%.0f", days); exit }'`
-# if (( $uptime > 30 )); then
-#     sudo /usr/local/bin/kandji display-alert --title "Showpad IT Alert" --message "You haven’t restarted your device for more than $uptime days. Please restart it as soon as possible."
-# fi
-#     echo "The device was rebooted $uptime days ago"
-
-print(f"Please specify the {GREEN}{BOLD}Kandji Library Item ID:{RESET}\n", end="")
+print(f"Please specify the {GREEN}{BOLD}Auto App Kandji Library Item ID:{RESET}\n", end="")
 while not (library_item := input().strip()):
   print("Library Item ID cannot be empty.\n", end="")
 
@@ -81,32 +73,41 @@ while url:  # keep looping until 'next' is None
     json_response = response.json()
 
     for value in range(len(json_response["results"])):
-        log_lines = json_response["results"][value]["log"]
+        status = json_response["results"][value]["status"]
         computer_name = json_response["results"][value]["computer"]["name"]
+        last_audit_log = json_response["results"][value].get("last_audit_log")
 
-        if log_lines:
-            if "Script results:" in log_lines:
-                script_results = log_lines.split("Script results:", 1)[1].strip()
-                # Filter out empty lines and lines starting with "Exit code:"
-                lines = [l.strip() for l in script_results.split('\n') if l.strip() and not l.startswith("Exit code:")]
-                if lines:
-                    combined_line = " | ".join(lines)
-                    print(f'{computer_name},{combined_line}')
-                    results_rows.append((computer_name, combined_line))
-                else:
-                    error_msg = "Error: Script ran but produced no output"
-                    print(f'{computer_name},{error_msg}')
-                    results_rows.append((computer_name, error_msg))
+        # Default values
+        installed_version = "N/A"
+        available_version = "N/A"
+        up_to_date = "Unknown"
+
+        if last_audit_log:  # only run regex if log text exists
+            installed_match = re.search(r"Google Chrome ([0-9.]+)", last_audit_log)
+            newer_match = re.search(r"A newer version \((.*)\)", last_audit_log)
+
+            if installed_match:
+                installed_version = installed_match.group(1)
+            if newer_match:
+                available_version = newer_match.group(1)
+
+            # Decide if machine is up to date
+            if available_version != "N/A":
+                up_to_date = "Not Running Latest Version"
             else:
-                error_msg = "Error: No 'Script results:' in log"
-                print(f'{computer_name},{error_msg}')
-                results_rows.append((computer_name, error_msg))
+                up_to_date = "Running Latest Version"
         else:
-            error_msg = "Error: No log data found"
-            print(f'{computer_name},{error_msg}')
-            results_rows.append((computer_name, error_msg))
+            # No audit log yet → mark as pending
+            up_to_date = "Audit Not Yet Available"
 
-    # Move to next page if any
+        # Print to terminal
+        print(f'{computer_name},{status},{installed_version},{available_version},{up_to_date}')
+
+        # Store row for CSV
+        results_rows.append((computer_name, status, installed_version, available_version, up_to_date))
+
+
+    # Advance to next page
     url = json_response.get("next")
 
 
@@ -119,7 +120,14 @@ if should_write_csv and results_rows:
   try:
     with open(csv_path, mode='w', newline='') as csvfile:
       writer = csv.writer(csvfile)
-      writer.writerow(["computer_name", "result"])  # header
+      # Updated header with extra fields
+      writer.writerow([
+        "computer_name",
+        "status",
+        "installed_version",
+        "newer_available_version",
+        "update_status"
+      ])
       writer.writerows(results_rows)
     print(f"✅ Saved CSV to: {RED}{BOLD}{csv_path}{RESET} 💾📄")
   except Exception as e:
