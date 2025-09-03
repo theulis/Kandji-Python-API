@@ -65,13 +65,6 @@ export kandji_api_token="your_api_token_here"
 export kandji_domain="yourtenant"
 ```
 
-## 📂 Example CSV Output
-
-```
-computer_name,result
-MacBook-Pro,The device was rebooted 12 days ago
-iMac-Office,The device was rebooted 3 days ago
-```
 ## ✅ Example Run
 ```
 Please specify the Kandji Library Item ID:
@@ -80,8 +73,8 @@ b5d21f9e-9d41-4463-b2b5-c292b3c2ccad
 Type Downloads, Desktop, or Documents to save CSV in your user folder, or press Enter to skip if you do not want to export this report to a CSV file:
 Downloads
 
-MacBook-Pro,The device was rebooted 12 days ago
-iMac-Office,The device was rebooted 3 days ago
+MacBook-Pro,Echo Command Output-1
+iMac-Office,Echo Command Output-2
 ✅ Saved CSV to: /Users/you/Downloads/Kandji-Export-Library-Status-b5d21f9e-9d41-4463-b2b5-c292b3c2ccad-20250903-132045.csv 💾📄
 ```
 
