@@ -1,10 +1,10 @@
 # Kandji-Python-API
 
 
-## Kandji Library Item Audit Script
+## Kandji Library Item Custom Script - Status / Audit
 
 ```
-Kandji-App-Audit.py
+Kandji-Custom-Script-Audit.py
 ```
 
 This Python script queries the [Kandji API](https://api-docs.kandji.io/#478764c4-638c-416c-b44c-3685a2f7b441) for the **status of a specific Library Item** (custom script).  
