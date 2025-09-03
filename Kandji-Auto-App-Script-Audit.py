@@ -67,68 +67,50 @@ if should_write_csv:
 # Collect results to optionally write to CSV at the end
 results_rows = []  # list of tuples: (computer_name, result_line)
 
-
 while url:  # keep looping until 'next' is None
     response = requests.request("GET", url, headers=headers, data=payload)
     json_response = response.json()
 
     for value in range(len(json_response["results"])):
-        status = json_response["results"][value]["status"]
         computer_name = json_response["results"][value]["computer"]["name"]
+        status = json_response["results"][value]["status"]
         last_audit_log = json_response["results"][value].get("last_audit_log")
 
         # Default values
-        installed_version = "N/A"
-        available_version = "N/A"
-        up_to_date = "Unknown"
+        result = "Audit Not Yet Available"
+        audit_log = ""
 
-        if last_audit_log:  # only run regex if log text exists
-            installed_match = re.search(r"Google Chrome ([0-9.]+)", last_audit_log)
-            newer_match = re.search(r"A newer version \((.*)\)", last_audit_log)
+        if last_audit_log:
+            # Flatten newlines to spaces
+            audit_log = " ".join(line.strip() for line in last_audit_log.splitlines() if line.strip())
 
-            if installed_match:
-                installed_version = installed_match.group(1)
-            if newer_match:
-                available_version = newer_match.group(1)
-
-            # Decide if machine is up to date
-            if available_version != "N/A":
-                up_to_date = "Not Running Latest Version"
+            # Determine update status
+            if "A newer version" in last_audit_log:
+                result = "Update Available"
             else:
-                up_to_date = "Running Latest Version"
-        else:
-            # No audit log yet → mark as pending
-            up_to_date = "Audit Not Yet Available"
+                result = "Up-to-Date"
 
-        # Print to terminal
-        print(f'{computer_name},{status},{installed_version},{available_version},{up_to_date}')
+        # Print to terminal with | separator
+        print(f"{computer_name} | {status} | {result} | {audit_log}")
 
         # Store row for CSV
-        results_rows.append((computer_name, status, installed_version, available_version, up_to_date))
+        results_rows.append((computer_name, status, result, audit_log))
 
-
-    # Advance to next page
+    # Advance to next page if any
     url = json_response.get("next")
-
 
 
 # Write CSV if requested and directory is valid
 if should_write_csv and results_rows:
-  safe_library_item = "".join(c for c in library_item if c.isalnum() or c in ('-', '_')) or "library_item"
-  timestamp = time.strftime("%Y%m%d-%H%M%S")
-  csv_path = os.path.join(save_dir, f"Kandji-Export-Library-Status-{safe_library_item}-{timestamp}.csv")
-  try:
-    with open(csv_path, mode='w', newline='') as csvfile:
-      writer = csv.writer(csvfile)
-      # Updated header with extra fields
-      writer.writerow([
-        "computer_name",
-        "status",
-        "installed_version",
-        "newer_available_version",
-        "update_status"
-      ])
-      writer.writerows(results_rows)
-    print(f"✅ Saved CSV to: {RED}{BOLD}{csv_path}{RESET} 💾📄")
-  except Exception as e:
-    print(f"⚠️ Failed to write CSV to '{csv_path}': {e}")
+    safe_library_item = "".join(c for c in library_item if c.isalnum() or c in ('-', '_')) or "library_item"
+    timestamp = time.strftime("%Y-%m-%d_%H-%M")  # YYYY-MM-DD_HH-MM
+    csv_path = os.path.join(save_dir, f"Kandji-Export-Library-Status-{safe_library_item}-{timestamp}.csv")
+    try:
+        with open(csv_path, mode='w', newline='') as csvfile:
+            writer = csv.writer(csvfile)
+            # Header
+            writer.writerow(["computer_name", "status", "result", "audit_log"])
+            writer.writerows(results_rows)
+        print(f"✅ Saved CSV to: {RED}{BOLD}{csv_path}{RESET} 💾📄")
+    except Exception as e:
+        print(f"⚠️ Failed to write CSV to '{csv_path}': {e}")

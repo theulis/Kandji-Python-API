@@ -161,7 +161,7 @@ b5d21f9e-9999-4444-3333-c292b3c2ccad
 Type Downloads, Desktop, or Documents to save CSV in your user folder, or press Enter to skip if you do not want to export this report to a CSV file:
 Downloads
 
-MacBook-Pro,PENDING,139.0.7258.155,140.0.7339.81 (7339.81),Not Running Latest Version
-iMac-Office,OK,140.0.7339.81 (7339.81),N/A,Running Latest Version
+computer_name	status	result	audit_log
+FVFJ2BFNQ6LR	PASS	Up-to-Date	Zoom Client for Meetings 6.5.12 (63499) (6.5.12.63499) is installed and up to date. Kandji is set to automatically enforce updates for Zoom Client for Meetings a week after they are released.
 ✅ Saved CSV to: /Users/you/Downloads/Kandji-Export-Library-Status-b5d21f9e-9999-4444-3333-c292b3c2ccad-20250903-132045.csv 💾📄
 ```
