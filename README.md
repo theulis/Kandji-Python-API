@@ -5,7 +5,7 @@ Click on the hyperlinks to go to the specific section.
 
 ✨ [Kandji Library Item Custom Script - Status / Audit](https://github.com/theulis/Kandji-Python-API?tab=readme-ov-file#kandji-library-item-custom-script---status--audit)
 
-✨ [Kandji Auto App Library Item Audit](https://github.com/theulis/Kandji-Python-API?tab=readme-ov-file#kandji-auto-app-library-item-audit)
+✨ [Kandji Library Item Auto App - Audit](https://github.com/theulis/Kandji-Python-API?tab=readme-ov-file#kandji-auto-app-library-item-audit)
 
 
 ## Kandji Library Item Custom Script - Status / Audit
@@ -86,7 +86,7 @@ iMac-Office,Echo Command Output-2
 ```
 
 
-## Kandji Auto App Library Item Audit
+## Kandji Library Item Auto App - Audit
 
 ```
 Kandji-Auto-App-Script-Audit.py
