@@ -87,11 +87,12 @@ while url:  # keep looping until 'next' is None
         if log_lines:
             if "Script results:" in log_lines:
                 script_results = log_lines.split("Script results:", 1)[1].strip()
+                # Filter out empty lines and lines starting with "Exit code:"
                 lines = [l.strip() for l in script_results.split('\n') if l.strip() and not l.startswith("Exit code:")]
                 if lines:
-                    last_line = lines[-1]
-                    print(f'{computer_name},{last_line}')
-                    results_rows.append((computer_name, last_line))
+                    combined_line = " | ".join(lines)
+                    print(f'{computer_name},{combined_line}')
+                    results_rows.append((computer_name, combined_line))
                 else:
                     error_msg = "Error: Script ran but produced no output"
                     print(f'{computer_name},{error_msg}')
@@ -107,6 +108,7 @@ while url:  # keep looping until 'next' is None
 
     # Move to next page if any
     url = json_response.get("next")
+
 
 
 # Write CSV if requested and directory is valid

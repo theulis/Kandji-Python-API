@@ -10,6 +10,9 @@ Kandji-Custom-Script-Audit.py
 This Python script queries the [Kandji API](https://api-docs.kandji.io/#478764c4-638c-416c-b44c-3685a2f7b441) for the **status of a specific Library Item** (custom script).  
 It outputs results to the terminal and can optionally export them to a CSV file.
 
+Kandji has a more complicated GitHub Script - For more info [Device Library Items](
+https://github.com/kandji-inc/support/blob/main/api-tools/device-library-items/README.md)
+
 ---
 
 ## 🔎 What the Script Does
