@@ -78,3 +78,83 @@ iMac-Office,Echo Command Output-2
 ✅ Saved CSV to: /Users/you/Downloads/Kandji-Export-Library-Status-b5d21f9e-9d41-4463-b2b5-c292b3c2ccad-20250903-132045.csv 💾📄
 ```
 
+
+## Kandji Auto App Library Item Audit
+
+```
+Kandji-Auto-App-Script-Audit.py
+```
+
+This Python script queries the [Kandji API](https://api-docs.kandji.io/#478764c4-638c-416c-b44c-3685a2f7b441) for the **status of a specific Auto App Library Item**. It extracts the installed version, available newer version, and update status for each device, prints the results to the terminal, and optionally exports them to a CSV file.
+
+Kandji has a more complicated GitHub Script – for more info see [Device Library Items](https://github.com/kandji-inc/support/blob/main/api-tools/device-library-items/README.md)
+
+---
+
+## 🔎 What the Script Does
+
+1. **Prompt for a Kandji Auto App Library Item ID**
+
+   * Example: `b5d21f9e-9d41-4463-b2b5-c292b3c2ccad`
+   * The script builds the API request URL using your **Kandji domain** and **API token** (set as environment variables).
+
+2. **Call the Kandji API**
+
+   * Makes authenticated requests to Kandji’s `library-items/{id}/status` endpoint.
+   * Automatically handles pagination until all devices are retrieved.
+
+3. **Process Results**
+
+   * Extracts the `computer_name`, `status`, `installed_version`, `available_version`, and `update_status`.
+   * Handles devices that have not yet reported an audit (`last_audit_log = null`).
+   * Prints the results to the terminal.
+
+4. **Optional CSV Export**
+
+   * Prompts whether to save results in `Downloads`, `Desktop`, or `Documents`.
+   * Saves a timestamped CSV like:
+
+     ```
+     Kandji-Export-Library-Status-b5d21f9e-9d41-4463-b2b5-c292b3c2ccad-20250903-132045.csv
+     ```
+
+5. **User-Friendly Output**
+
+   * Uses ANSI escape codes (`RED`, `GREEN`, `BOLD`) for colored prompts, warnings, and success messages.
+
+---
+
+## ✨ Features
+
+* Query Kandji for any Auto App Library Item audit.
+* Extract installed and available app versions.
+* Detects whether devices are running the latest version.
+* Handles devices that haven’t reported audit logs yet.
+* Pagination support to fetch **all devices**.
+* Optional CSV export to user’s **Downloads**, **Desktop**, or **Documents** folder.
+* Colorized terminal output for clarity.
+
+---
+
+## Environment Variables
+
+```
+export kandji_api_token="your_api_token_here"
+export kandji_domain="yourtenant"
+```
+
+---
+
+## ✅ Example Run
+
+```
+Please specify the Auto App Kandji Library Item ID:
+b5d21f9e-9d41-4463-b2b5-c292b3c2ccad
+
+Type Downloads, Desktop, or Documents to save CSV in your user folder, or press Enter to skip if you do not want to export this report to a CSV file:
+Downloads
+
+MacBook-Pro,PENDING,139.0.7258.155,140.0.7339.81 (7339.81),Not Running Latest Version
+iMac-Office,OK,140.0.7339.81 (7339.81),N/A,Running Latest Version
+✅ Saved CSV to: /Users/you/Downloads/Kandji-Export-Library-Status-b5d21f9e-9d41-4463-b2b5-c292b3c2ccad-20250903-132045.csv 💾📄
+```
