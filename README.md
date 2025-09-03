@@ -18,7 +18,7 @@ https://github.com/kandji-inc/support/blob/main/api-tools/device-library-items/R
 ## 🔎 What the Script Does
 
 1. **Prompt for a Kandji Library Item ID**  
-   - Example: `b5d21f9e-9d41-4463-b2b5-c292b3c2ccad`  
+   - Example: `b5d21f9e-9999-4444-3333-c292b3c2ccad`  
    - The script builds the API request URL using your **Kandji domain** and **API token** (set as environment variables).
 
 2. **Call the Kandji API**  
@@ -40,7 +40,7 @@ Error: No log data found
    - Prompts whether to save results in `Downloads`, `Desktop`, or `Documents`.  
    - If chosen, saves results as a timestamped CSV like:  
      ```
-     Kandji-Export-Library-Status-b5d21f9e-9d41-4463-b2b5-c292b3c2ccad-20250903-132045.csv
+     Kandji-Export-Library-Status-b5d21f9e-9999-4444-3333-c292b3c2ccad-20250903-132045.csv
      ```
 
 5. **User-Friendly Output**  
@@ -95,7 +95,7 @@ Kandji has a more complicated GitHub Script – for more info see [Device Librar
 
 1. **Prompt for a Kandji Auto App Library Item ID**
 
-   * Example: `b5d21f9e-9d41-4463-b2b5-c292b3c2ccad`
+   * Example: `b5d21f9e-9999-4444-3333-c292b3c2ccad`
    * The script builds the API request URL using your **Kandji domain** and **API token** (set as environment variables).
 
 2. **Call the Kandji API**
@@ -149,12 +149,12 @@ export kandji_domain="yourtenant"
 
 ```
 Please specify the Auto App Kandji Library Item ID:
-b5d21f9e-9d41-4463-b2b5-c292b3c2ccad
+b5d21f9e-9999-4444-3333-c292b3c2ccad
 
 Type Downloads, Desktop, or Documents to save CSV in your user folder, or press Enter to skip if you do not want to export this report to a CSV file:
 Downloads
 
 MacBook-Pro,PENDING,139.0.7258.155,140.0.7339.81 (7339.81),Not Running Latest Version
 iMac-Office,OK,140.0.7339.81 (7339.81),N/A,Running Latest Version
-✅ Saved CSV to: /Users/you/Downloads/Kandji-Export-Library-Status-b5d21f9e-9d41-4463-b2b5-c292b3c2ccad-20250903-132045.csv 💾📄
+✅ Saved CSV to: /Users/you/Downloads/Kandji-Export-Library-Status-b5d21f9e-9999-4444-3333-c292b3c2ccad-20250903-132045.csv 💾📄
 ```
