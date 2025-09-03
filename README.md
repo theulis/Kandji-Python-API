@@ -1,5 +1,11 @@
 # Kandji-Python-API
 
+## Python Scripts 
+Click on the hyperlinks to go to the specific section.
+
+[Kandji Library Item Custom Script - Status / Audit](https://github.com/theulis/Kandji-Python-API?tab=readme-ov-file#kandji-library-item-custom-script---status--audit) 
+[Kandji Auto App Library Item Audit](https://github.com/theulis/Kandji-Python-API?tab=readme-ov-file#kandji-auto-app-library-item-audit)
+
 
 ## Kandji Library Item Custom Script - Status / Audit
 
