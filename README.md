@@ -165,3 +165,16 @@ computer_name	status	result	audit_log
 FVFJ2BFNQ6LR	PASS	Up-to-Date	Zoom Client for Meetings 6.5.12 (63499) (6.5.12.63499) is installed and up to date. Kandji is set to automatically enforce updates for Zoom Client for Meetings a week after they are released.
 ✅ Saved CSV to: /Users/you/Downloads/Kandji-Export-Library-Status-b5d21f9e-9999-4444-3333-c292b3c2ccad-20250903-132045.csv 💾📄
 ```
+
+CSV Output Sample
+```
+computer_name	status	result	audit_log
+J7XLYV6RRR	AVAILABLE	App-Not-Installed	Firefox is waiting for install through Self Service.
+FVFJ2BFNQRRR	AVAILABLE	App-Not-Installed	Firefox is waiting for install through Self Service.
+L6WYGP0RRR	PASS	Up-to-Date	Firefox 142.0.1 (14225.8.27) is installed and up to date. Kandji is set to automatically enforce updates for Firefox two weeks after they are released.
+C59992JRRR	AVAILABLE	App-Not-Installed	Firefox is waiting for install through Self Service.
+J444Y16RRR	AVAILABLE	App-Not-Installed	Firefox is waiting for install through Self Service.
+C76QX07RRR	PASS	Up-to-Date	Firefox 142.0.1 (14225.8.27) is installed and up to date. Kandji is set to automatically enforce updates for Firefox two weeks after they are released.
+GJ4DXPFRRR	AVAILABLE	App-Not-Installed	Firefox is waiting for install through Self Service.
+FVFJ2BFLQRRR	PASS	Update Available	Firefox 142.0 (14225.8.11) is installed. A newer version (142.0.1 (14225.8.27)) of Firefox is available. Kandji is set to automatically enforce updates two weeks after they are released.
+```

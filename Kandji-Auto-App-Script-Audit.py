@@ -80,12 +80,17 @@ while url:  # keep looping until 'next' is None
         result = "Audit Not Yet Available"
         audit_log = ""
 
-        if last_audit_log:
-            # Flatten newlines to spaces
+        if last_audit_log and last_audit_log.strip():
+            # Flatten multi-line log
             audit_log = " ".join(line.strip() for line in last_audit_log.splitlines() if line.strip())
-
-            # Determine update status
-            if "A newer version" in last_audit_log:
+            
+            # Normalize text for easier matching
+            lower_log = audit_log.lower()
+            
+            # Determine result
+            if "waiting for install through self service" in lower_log:
+                result = "App-Not-Installed"
+            elif "a newer version" in lower_log:
                 result = "Update Available"
             else:
                 result = "Up-to-Date"
