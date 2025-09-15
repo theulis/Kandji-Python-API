@@ -170,11 +170,11 @@ CSV Output Sample
 ```
 computer_name	status	result	audit_log
 J7XLYV6RRR	AVAILABLE	App-Not-Installed	Firefox is waiting for install through Self Service.
-FVFJ2BFNQRRR	AVAILABLE	App-Not-Installed	Firefox is waiting for install through Self Service.
+FVFJ2BFNQR	AVAILABLE	App-Not-Installed	Firefox is waiting for install through Self Service.
 L6WYGP0RRR	PASS	Up-to-Date	Firefox 142.0.1 (14225.8.27) is installed and up to date. Kandji is set to automatically enforce updates for Firefox two weeks after they are released.
 C59992JRRR	AVAILABLE	App-Not-Installed	Firefox is waiting for install through Self Service.
 J444Y16RRR	AVAILABLE	App-Not-Installed	Firefox is waiting for install through Self Service.
 C76QX07RRR	PASS	Up-to-Date	Firefox 142.0.1 (14225.8.27) is installed and up to date. Kandji is set to automatically enforce updates for Firefox two weeks after they are released.
 GJ4DXPFRRR	AVAILABLE	App-Not-Installed	Firefox is waiting for install through Self Service.
-FVFJ2BFLQRRR	PASS	Update Available	Firefox 142.0 (14225.8.11) is installed. A newer version (142.0.1 (14225.8.27)) of Firefox is available. Kandji is set to automatically enforce updates two weeks after they are released.
+FVFJRRRRRR	PASS	Update Available	Firefox 142.0 (14225.8.11) is installed. A newer version (142.0.1 (14225.8.27)) of Firefox is available. Kandji is set to automatically enforce updates two weeks after they are released.
 ```
