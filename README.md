@@ -85,6 +85,16 @@ iMac-Office,Echo Command Output-2
 ✅ Saved CSV to: /Users/you/Downloads/Kandji-Export-Library-Status-b5d21f9e-9d41-4463-b2b5-c292b3c2ccad-20250903-132045.csv 💾📄
 ```
 
+CSV Output Sample
+```
+computer_name	result
+H9P0GQRRRR	No compromises found
+LHG1VRRRRR	No compromises found
+F6Y6P7RRRR	No compromises found
+V2D64QRRRR	Compromised by oxc extension | An error occurred executing the item "VSCode Extensions Check [VULN - ISD-24241]": Script exited with non-zero status.
+FVFHR33MQRRR	No compromises found
+```
+
 
 ## Kandji Library Item Auto App - Audit
 
