@@ -1,5 +1,11 @@
 # Kandji-Python-API
 
+
+## Reference 
+
+Simplify Official Kandji Scripts, which brings info extraction time from 10-15 mins to a few seconds. 
+[Official Kandji GitHub Account](https://github.com/kandji-inc/support/tree/main/api-tools)
+
 ## Python Scripts 
 Click on the hyperlinks to go to the specific section.
 
