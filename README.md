@@ -209,9 +209,10 @@ Kandji-Export-Secrets.py
 ### Requirements
 
 Environment variables required:
-
+```
 kandji_api_token – Your Kandji API token.
 kandji_device_api_url – Your Kandji device API URL (e.g., yourtenant.clients.us-1.kandji.io).
+```
 
 To Set environment variables
 
