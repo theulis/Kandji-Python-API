@@ -15,6 +15,7 @@ Click on the hyperlinks to go to the specific section.
 ✨ [Kandji Library Item Auto App - Audit](https://github.com/theulis/Kandji-Python-API?tab=readme-ov-file#kandji-auto-app-library-item-audit)
 
 
+
 ## Kandji Library Item Custom Script - Status / Audit
 
 ```
@@ -194,4 +195,32 @@ J444Y16RRR	AVAILABLE	App-Not-Installed	Firefox is waiting for install through Se
 C76QX07RRR	PASS	Up-to-Date	Firefox 142.0.1 (14225.8.27) is installed and up to date. Kandji is set to automatically enforce updates for Firefox two weeks after they are released.
 GJ4DXPFRRR	AVAILABLE	App-Not-Installed	Firefox is waiting for install through Self Service.
 FVFJRRRRRR	PASS	Update Available	Firefox 142.0 (14225.8.11) is installed. A newer version (142.0.1 (14225.8.27)) of Firefox is available. Kandji is set to automatically enforce updates two weeks after they are released.
+```
+
+## Kandji Device Export Script
+
+This Python script exports device information and secrets from a Kandji account into a CSV file. It retrieves device details, FileVault keys, bypass codes, and unlock PINs, supporting pagination for larger environments (>300 devices)
+
+```
+Kandji-Export-Secrets.py
+```
+
+### Requirements
+
+Environment variables required:
+
+kandji_api_token – Your Kandji API token.
+kandji_device_api_url – Your Kandji device API URL (e.g., yourtenant.clients.us-1.kandji.io).
+
+To Set environment variables
+
+```
+export kandji_api_token="YOUR_API_TOKEN_HERE"
+export kandji_device_api_url="yourtenant.clients.us-1.kandji.io"
+```
+
+### Output
+CVS Columns 
+```
+Serial_Number,Device_ID,Platform,Blueprint_Name,Last_Check_In,OS_Version,FileVault_Key,User_Based_Bypass_Code,Device_Based_Bypass_Code,User_Unlock_PIN
 ```
