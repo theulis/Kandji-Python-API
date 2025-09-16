@@ -15,9 +15,7 @@ GREEN = "\033[32m"
 kandji_api_token = os.environ.get("kandji_api_token")
 authorisation_value = str('Bearer ') + kandji_api_token
 kandji_device_api_url=os.environ.get("kandji_device_api_url")
-
-print(kandji_device_api_url)
-
+kandji_domain=os.environ.get("kandji_domain")
 
 timestr = time.strftime("%Y-%m-%d_%H-%M-%S")
 filename="Kandji_Device_Export_With_Secrets_"+str(timestr)+".csv"
@@ -52,26 +50,40 @@ if should_write_csv:
 
 ### ==========================================================================================================================================
 
+#### Get Device Count
+#### We will run an API call for every 300 devices (1-300,301-600,601-900 etc.)
+### First we need to find how many devices we have
+
+url_device_count = "https://"+kandji_domain+".api.kandji.io/api/v1/settings/licensing"
+payload = {}
+headers = {'Authorization': authorisation_value}
+
+response_device_count = requests.request("GET", url_device_count, headers=headers, data=payload)
+response_device_count_json=response_device_count.json()
+
+total_devices=response_device_count_json['counts']['computers_count']
+
+# Generate URLs dynamically
+api_limit = 300  # devices per API call
+base_url = "https://"+kandji_device_api_url+"/api/v1/devices"
+urls = [f"{base_url}?offset={i+1}" if i > 0 else base_url for i in range(0, total_devices, api_limit)]
+
+
+## Write to the CSV File - Start with the Header 
 pathname = save_dir + "/" + filename
 with open(pathname, "a") as f:
     print("Serial_Number,Device_ID,Platform,Blueprint_Name,Last_Check_In,OS_Version,FileVault_Key,User_Based_Bypass_Code,Device_Based_Bypass_Code,User_Unlock_PIN", file=f)
 
-    url = "https://"+kandji_device_api_url+"/api/v1/devices"
 
-    payload = {}
-    headers = {
-    'Authorization': authorisation_value}
 
-    while url:  # keep looping until 'next' is None
+    for url in urls:  # keep looping until 'next' is None
+        payload = {}
+        headers = {'Authorization': authorisation_value}
         response = requests.request("GET", url, headers=headers, data=payload)
         dictionary_user_output= json.loads(response.text)
         for value in range(len(dictionary_user_output)):
-
-            # Print progress to terminal
-            device_serial = dictionary_user_output[value]['serial_number']
-            device_id = dictionary_user_output[value]['device_id']
-            print(f"{GREEN}Processing Device {device_serial} ({device_id})...{RESET}")
-
+            print(f"{GREEN}Processing Device {str(dictionary_user_output[value]['serial_number'])} "
+                  f"({str(dictionary_user_output[value]['device_id'])})...{RESET}", end='\r')
             print(str(dictionary_user_output[value]['serial_number']),end=',', file=f)
             print(str(dictionary_user_output[value]['device_id']),end=',', file=f)
             print(str(dictionary_user_output[value]['platform']),end=',', file=f)
@@ -112,13 +124,6 @@ with open(pathname, "a") as f:
             dictionary_unlock_pin_output= json.loads(response_unlock_pin.text)
             print(dictionary_unlock_pin_output['pin'], file=f)
 
-
-# ✅ assign url to the next page, if any
-## Typical JSON Response
-# "count": 380,
-# "next": "https://xxx.api.kandji.io/api/v1/devices?limit=300&offset=300",
-# "previous": null,
-    url = dictionary_user_output.get("next")
 
 
 

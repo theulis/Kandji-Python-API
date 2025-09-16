@@ -212,6 +212,7 @@ Environment variables required:
 ```
 kandji_api_token – Your Kandji API token.
 kandji_device_api_url – Your Kandji device API URL (e.g., yourtenant.clients.us-1.kandji.io).
+kandji_domain - You Kandji domain
 ```
 
 To Set environment variables
@@ -219,6 +220,7 @@ To Set environment variables
 ```
 export kandji_api_token="YOUR_API_TOKEN_HERE"
 export kandji_device_api_url="yourtenant.clients.us-1.kandji.io"
+export kandji_domain="yourtenant"
 ```
 
 ### Output
