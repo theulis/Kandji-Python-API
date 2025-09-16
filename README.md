@@ -14,6 +14,7 @@ Click on the hyperlinks to go to the specific section.
 
 ✨ [Kandji Library Item Auto App - Audit](https://github.com/theulis/Kandji-Python-API?tab=readme-ov-file#kandji-auto-app-library-item-audit)
 
+✨ [Kandji Export Secrets](https://github.com/theulis/Kandji-Python-API?tab=readme-ov-file#kandji-device-export-script)
 
 
 ## Kandji Library Item Custom Script - Status / Audit
