@@ -85,6 +85,7 @@ while url:  # keep looping until 'next' is None
 
     for value in range(len(json_response["results"])):
         log_lines = json_response["results"][value]["log"]
+        status = json_response["results"][value]["status"]
         computer_name = json_response["results"][value]["computer"]["name"]
 
         if log_lines:
@@ -94,20 +95,20 @@ while url:  # keep looping until 'next' is None
                 lines = [l.strip() for l in script_results.split('\n') if l.strip() and not l.startswith("Exit code:")]
                 if lines:
                     combined_line = " | ".join(lines)
-                    print(f'{computer_name},{combined_line}')
-                    results_rows.append((computer_name, combined_line))
+                    print(f'{computer_name},{status},{combined_line}')
+                    results_rows.append((computer_name, status, combined_line))
                 else:
                     error_msg = "Error: Script ran but produced no output"
-                    print(f'{computer_name},{error_msg}')
-                    results_rows.append((computer_name, error_msg))
+                    print(f'{computer_name},{status},{error_msg}')
+                    results_rows.append((computer_name,status, error_msg))
             else:
                 error_msg = "Error: No 'Script results:' in log"
-                print(f'{computer_name},{error_msg}')
-                results_rows.append((computer_name, error_msg))
+                print(f'{computer_name},{status},{error_msg}')
+                results_rows.append((computer_name,status, error_msg))
         else:
             error_msg = "Error: No log data found"
-            print(f'{computer_name},{error_msg}')
-            results_rows.append((computer_name, error_msg))
+            print(f'{computer_name},{status},{error_msg}')
+            results_rows.append((computer_name,status,error_msg))
 
     # Move to next page if any
     url = json_response.get("next")
@@ -122,7 +123,7 @@ if should_write_csv and results_rows:
   try:
     with open(csv_path, mode='w', newline='') as csvfile:
       writer = csv.writer(csvfile)
-      writer.writerow(["computer_name", "result"])  # header
+      writer.writerow(["computer_name", "status", "result"])  # header
       writer.writerows(results_rows)
     print(f"✅ Saved CSV to: {RED}{BOLD}{csv_path}{RESET} 💾📄")
   except Exception as e:
